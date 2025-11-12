@@ -1,34 +1,85 @@
+# -------------------
 # Virtual environment
+# -------------------
 venv/
 .env/
 *.env
 
+# -------------------
 # Python cache
+# -------------------
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Jupyter Notebook checkpoints
+# -------------------
+# Jupyter Notebook
+# -------------------
 .ipynb_checkpoints
 
+# -------------------
 # Logs
+# -------------------
 *.log
 
-# Data files (optional - uncomment if needed)
+# -------------------
+# Data / model / output files
+# -------------------
+# Uncomment if needed
 # data/
 # models/
 # output/
 
+# -------------------
 # IDE / Editor settings
+# -------------------
 .vscode/
 .idea/
 *.swp
 
+# -------------------
 # OS files
+# -------------------
 .DS_Store
 Thumbs.db
 
+# -------------------
 # Build / Distribution
+# -------------------
 build/
 dist/
 *.egg-info/
+
+# -------------------
+# Python bytecode / cache
+# -------------------
+*.pyc
+*.pyo
+*.pyd
+__pypackages__/
+
+# -------------------
+# Pip / Package managers
+# -------------------
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg
+*.wheel
+
+# -------------------
+# Coverage / Testing
+# -------------------
+.coverage
+htmlcov/
+.tox/
+.nox/
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# -------------------
+# Misc
+# -------------------
+*.sqlite3
+*.db

@@ -31,7 +31,13 @@ class DataTransformation:
 
             target_column = matched_columns[0]
 
-            X_train = train_df.drop(columns=[target_column])
+            # Drop target column and also drop 'Id' column if it exists (Id is not a feature)
+            columns_to_drop = [target_column]
+            if 'Id' in train_df.columns:
+                columns_to_drop.append('Id')
+                logger.info("Excluding 'Id' column from features (not a predictive feature)")
+            
+            X_train = train_df.drop(columns=columns_to_drop)
             y_train = train_df[target_column]
 
             if target_column not in test_df.columns:
@@ -46,7 +52,12 @@ class DataTransformation:
             else:
                 target_column_test = target_column
 
-            X_test = test_df.drop(columns=[target_column_test])
+            # Drop target column and also drop 'Id' column if it exists
+            columns_to_drop_test = [target_column_test]
+            if 'Id' in test_df.columns:
+                columns_to_drop_test.append('Id')
+            
+            X_test = test_df.drop(columns=columns_to_drop_test)
             y_test = test_df[target_column_test]
 
             logger.info("Feature and target split completed successfully.")

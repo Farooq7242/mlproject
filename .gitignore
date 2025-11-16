@@ -21,14 +21,30 @@ __pycache__/
 # Logs
 # -------------------
 *.log
+logs/
+src/logs/
 
 # -------------------
 # Data / model / output files
 # -------------------
-# Uncomment if needed
+# Artifacts (generated during training)
+artifacts/
+*.pkl
+*.pkl.gz
+
+# Keep data folder structure but ignore large files if needed
 # data/
-# models/
-# output/
+# Uncomment if you don't want to commit data files
+# data/*.csv
+
+# Model comparison results (can be regenerated)
+# artifacts/model_comparison.json
+
+# -------------------
+# Project specific
+# -------------------
+# Note: train_models.py, check_model_info.py, test_predictions.py are kept in repo
+# as they are useful scripts for users
 
 # -------------------
 # IDE / Editor settings
@@ -83,3 +99,17 @@ coverage.xml
 # -------------------
 *.sqlite3
 *.db
+
+# -------------------
+# ML Project Specific
+# -------------------
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Model info documentation (optional)
+# MODEL_INFO.md
+
+# Temporary test files (uncomment if you don't want test files in repo)
+# test_*.py
+# *_test.py

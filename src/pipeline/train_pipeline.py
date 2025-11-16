@@ -19,7 +19,9 @@ class TrainingPipeline:
             model_trainer = ModelTrainer()
             acc = model_trainer.initiate_model_training(X_train, X_test, y_train, y_test)
 
-            logger.info(f"Training pipeline completed successfully with accuracy: {acc}")
+            logger.info(f"Training pipeline completed successfully!")
+            logger.info(f"Best Model: {model_trainer.best_model_name}")
+            logger.info(f"Best Accuracy: {acc:.4f} ({acc*100:.2f}%)")
             logger.info("===============================================")
         except Exception as e:
             raise CustomException(e, sys)

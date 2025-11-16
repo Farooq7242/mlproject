@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Species Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .prediction-result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .prediction-success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #2d5016;
+        }
+
+        .prediction-error {
+            background: #fee;
+            color: #c33;
+            border: 2px solid #fcc;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .info-box p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .feature-range {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌺 Iris Species Predictor</h1>
+        <p class="subtitle">Enter flower measurements to predict the species</p>
+
+        <div class="info-box">
+            <h3>📊 About Iris Dataset</h3>
+            <p>The Iris dataset contains measurements of sepal and petal dimensions. 
+            Enter the measurements below to predict whether it's <strong>Setosa</strong>, 
+            <strong>Versicolor</strong>, or <strong>Virginica</strong>.</p>
+            <p style="margin-top: 10px;"><strong>💡 Try these examples:</strong></p>
+            <ul style="margin: 5px 0; padding-left: 20px; font-size: 0.9em;">
+                <li><strong>Setosa:</strong> 5.1, 3.5, 1.4, 0.2</li>
+                <li><strong>Versicolor:</strong> 6.0, 3.0, 4.5, 1.5</li>
+                <li><strong>Virginica:</strong> 6.5, 3.0, 5.2, 2.0</li>
+            </ul>
+        </div>
+
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="sepal_length">Sepal Length (cm)</label>
+                <input type="number" 
+                       id="sepal_length" 
+                       name="sepal_length" 
+                       step="0.1" 
+                       min="0" 
+                       max="10" 
+                       value="{{ sepal_length if sepal_length else '5.1' }}" 
+                       required>
+                <div class="feature-range">Typical range: 4.3 - 7.9 cm</div>
+            </div>
+
+            <div class="form-group">
+                <label for="sepal_width">Sepal Width (cm)</label>
+                <input type="number" 
+                       id="sepal_width" 
+                       name="sepal_width" 
+                       step="0.1" 
+                       min="0" 
+                       max="10" 
+                       value="{{ sepal_width if sepal_width else '3.5' }}" 
+                       required>
+                <div class="feature-range">Typical range: 2.0 - 4.4 cm</div>
+            </div>
+
+            <div class="form-group">
+                <label for="petal_length">Petal Length (cm)</label>
+                <input type="number" 
+                       id="petal_length" 
+                       name="petal_length" 
+                       step="0.1" 
+                       min="0" 
+                       max="10" 
+                       value="{{ petal_length if petal_length else '1.4' }}" 
+                       required>
+                <div class="feature-range">Typical range: 1.0 - 6.9 cm</div>
+            </div>
+
+            <div class="form-group">
+                <label for="petal_width">Petal Width (cm)</label>
+                <input type="number" 
+                       id="petal_width" 
+                       name="petal_width" 
+                       step="0.1" 
+                       min="0" 
+                       max="10" 
+                       value="{{ petal_width if petal_width else '0.2' }}" 
+                       required>
+                <div class="feature-range">Typical range: 0.1 - 2.5 cm</div>
+            </div>
+
+            <button type="submit" class="btn">🔮 Predict Species</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="prediction-result {% if 'Error' in prediction_text %}prediction-error{% else %}prediction-success{% endif %}">
+            {{ prediction_text }}
+            {% if input_values %}
+            <div style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                {{ input_values }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

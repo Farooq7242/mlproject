@@ -1,0 +1,25 @@
+# Local artifacts and notebooks
+artifacts/**
+logs/**
+data/**
+ml_notebook.ipynb
+
+# Python cache and environments
+__pycache__/
+*.pyc
+venv/**
+.venv/**
+
+# Git and IDE metadata
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Misc
+*.log
+*.pt
+*.h5
+*.pkl
+*.ipynb_checkpoints/
+

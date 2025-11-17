@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request, jsonify
 from src.pipeline.predict_pipeline import PredictPipeline
+from src.pipeline.train_pipeline import TrainingPipeline
 from src.logger import logger
 from src.exception import CustomException
 import sys
 
 app = Flask(__name__)
+# Expose WSGI application entrypoint for Elastic Beanstalk
+application = app
 
 # Initialize prediction pipeline
 predict_pipeline = PredictPipeline()
+training_pipeline = TrainingPipeline()
 
 @app.route('/')
 def home():
@@ -87,6 +91,29 @@ def predict_api():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
+
+@app.route('/train', methods=['GET', 'POST'])
+def train():
+    """Endpoint to trigger model training pipeline."""
+    try:
+        logger.info("Starting training pipeline via /train endpoint")
+        training_pipeline.start_training()
+        message = "Training pipeline completed successfully."
+        logger.info(message)
+
+        if request.headers.get('Accept') == 'application/json':
+            return jsonify({'status': 'success', 'message': message}), 200
+        
+        return render_template('index.html', prediction_text=message)
+
+    except Exception as e:
+        logger.error(f"Training pipeline failed: {str(e)}")
+        
+        if request.headers.get('Accept') == 'application/json':
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+        
+        return render_template('index.html', prediction_text=f'Error: {str(e)}'), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

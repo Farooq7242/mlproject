@@ -12,3 +12,4 @@ lightgbm
 joblib
 tqdm
 flask
+gunicorn

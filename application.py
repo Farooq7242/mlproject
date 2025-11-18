@@ -1,5 +1,12 @@
 import os
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+
+try:
+    from flask import Flask, render_template, request, jsonify, redirect, url_for
+except ImportError as exc:
+    raise ImportError(
+        "Flask is required to run this application. Install it via "
+        "'pip install flask' or 'pip install -r requirements.txt'."
+    ) from exc
 from src.pipeline.predict_pipeline import PredictPipeline
 from src.pipeline.train_pipeline import TrainingPipeline
 from src.logger import logger

@@ -126,7 +126,6 @@ def train():
 # Elastic Beanstalk requires PORT variable
 # -----------------------------------------
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8000))  # EB will auto use correct port
+    port = int(os.environ.get("PORT", 8080))  # EB will auto use correct port
     debug_mode = os.environ.get("FLASK_DEBUG", "False").lower() in ["true", "1", "yes"]
-    
     app.run(host='0.0.0.0', port=port, debug=debug_mode)

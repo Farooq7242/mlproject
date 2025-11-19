@@ -113,3 +113,8 @@ coverage.xml
 # Temporary test files (uncomment if you don't want test files in repo)
 # test_*.py
 # *_test.py
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -124,5 +124,5 @@ def train():
 # Elastic Beanstalk requires PORT variable
 # -----------------------------------------
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # EB will auto use correct port
+    port = int(os.environ.get("PORT", 8000))  # EB will auto use correct port
     app.run(host='0.0.0.0', port=port, debug=False)

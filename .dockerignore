@@ -1,0 +1,9 @@
+venv/
+*.pyc
+__pycache__/
+*.ipynb
+logs/
+artifacts/
+.elasticbeanstalk/
+.ebextensions/
+data/raw/
